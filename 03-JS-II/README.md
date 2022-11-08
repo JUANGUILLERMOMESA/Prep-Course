@@ -6,7 +6,7 @@
       <a href="https://airtable.com/shrSzEYT4idEFGB8d?prefill_clase=03-JS-II">
         <img src="https://static.thenounproject.com/png/204643-200.png" width="100"/>
         <br>
-        Hacé click acá para dejar tu feedback sobre esta clase.
+        Haz click acá para dejar tu feedback sobre esta clase.
       </a>
     </td>
   </tr>
@@ -14,290 +14,170 @@
 
 # JavaScript II
 
-#### Flujos de control, operadores lógicos, bucles ***for***
+En esta lección cubriremos:
 
-<!-- En esta lección cubriremos:
+* Funciones (argumentos, `return`)
+* Controladores de flujo (`if` / `else`)
 
-* `Undefined` y `null`
-* Operadores de comparación (continuación)
-* Flujos de control (continuación)
-* Operados lógicos
-* Bucles `for`
-* `arguments` -->
+## Introducción a las funciones
 
-<div class="iframeContainer">
-<iframe src="https://player.vimeo.com/video/424318886?h=aa9eb809cc&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="1920" height="1080" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="02 - JS II - Flujos de control"></iframe>
-</div>
 
-## Undefined y null
+![funcionIntro](./img/functionIntro.png)
 
-Hay un par de objetos Javascript que realmente no encajan en ningún tipo de dato. Esos son los valores `undefined` y `null`. Obtendrás `undefined` cuando busques *algo* que no existe, como una variable que aún no tiene un valor. `undefined` simplemente significa que lo que estás pidiendo no existe.
+Las funciones son una parte muy importante de todo lenguaje de programacion y sobre todo en JavaScript. Son tipos particulares de objetos, llamados ***callable objects*** u objetos invocables, por lo que tienen las mismas propiedades que cualquier objeto.
+
+Ahora que tenemos un conjunto de variables, necesitamos funciones para calcularlas, cambiarlas, hacer algo con ellas. Hay tres formas en que podemos construir una función:
 
 ```javascript
-console.log(variableInexistente); // undefined
+function miFuncion() {}
+var otraFuncion = function () {};
+var yOtra = () => {};
+```
+Usaremos la primera forma en esta lección y hablaremos sobre las otras formas en próximas lecciones.
+
+### Anatomía de una Función
+![funcion](./img/function.png)
+
+```javascript
+function miFuncion() {}
 ```
 
-`null` es un objeto que nosotros, los desarrolladores, establecemos cuando queremos decirles a otros desarrolladores que el elemento que están buscando existe, pero no hay ningún valor asociado con él. Mientras que `undefined` está configurado por Javascript, `null` está configurado por un desarrollador. Si alguna vez recibes `null`, debes saber que otro desarrollador estableció ese valor en `null`
+Una función comenzará con la palabra clave `function`, esto le dice a lo que sea que esté ejecutando tu programa que lo que sigue es una función y que debe tratarse como tal. Después de eso viene el nombre de la función, nos gusta dar nombres de funciones que describan lo que hacen. Luego viene un paréntesis abierto y uno cerrado. Finalmente, abrimos y cerramos las llaves. Dentro de estas es donde estará todo nuestro código a ejecutar, al hacer el llamado de la función.
 
 ```javascript
-let numeroTelefono = '11-1234-5678';
-numeroTelefono = null;
-
-numeroTelefono; // null
-```
-
-Una última cosa a tener en cuenta, ni `undefined` ni `null` son cadenas, están escritas tal como están sin comillas, como un booleano.
-
-## Veracidad
-
-En estas lecciones hemos hablado sobre los valores booleanos, `true` y `false`. Cuando se usa una declaración `if` u otra declaración que espera un valor booleano (como `!`, *NOT*), y la expresión dada no es un valor booleano, Javascript hará algo llamado "coerción de tipo" y transformará lo que sea que se le entregue a un valor booleano. Esto se conoce como "truthy" y "falsey". Cada tipo de datos tiene una veracidad. Acá hay unos ejemplos:
-
-```javascript
-// Datos que son forzados a verdaderos/"true"
-true
-1
-' '
-[] // Un array, aprenderemos más sobre esto más adelante
-{} // Un objeto, aprenderemos más sobre esto más adelante
-function() {}
-
-// Datos que son forzados a falsos/"false"
-false
-0
-undefined
-null
-'' // Una cadena vacía
-```
-
-## Operadores de comparación (continuación)
-
-En la última lección usamos operadores de comparación, ahora profundizaremos un poco más sobre cómo funcionan y luego presentaremos un pariente cercano de operadores de comparación, los "operadores lógicos".
-
-En la última lección presentamos nuestros operadores de comparación, (`>` `>=` `<` `<=` `===` `!==`). Estos operadores funcionan como lo harían en una clase de matemáticas, mayor que, menor que, etc. Utilizamos estos operadores para evaluar dos expresiones. A medida que la computadora ejecuta el código, el operador devolverá un `verdadero` (si la declaración es verdadera) o un `falso`.
-
-```javascript
-1 > 2;     // false
-2 < 3;     // true
-10 >= 10;  // true
-100 <= 1;  // false
-```
-
-El "triple igual" (`===`) no debe confundirse con un solo signo igual (que indica asignar un valor a una variable). El triple igual comparará todo sobre los dos elementos, incluido el tipo, y devolverá si son exactamente iguales o no:
-
-(Algo a tener en cuenta: hay un "doble igual" (`==`) que comparará dos elementos, pero NO tendrá en cuenta sus tipos (`1 == '1' // verdadero`). Debido a esto , se considera una mala práctica usar el doble igual. Nos gustaría verte siempre usando el triple, y siempre nos verás usándolo.)
-
-```javascript
-1 === 1;          // true
-1 === '1';        // false
-'perro' === 'perro';  // true
-'perro' === 'Perro';  // false
-```
-
-El último operador de comparación que nos gustaría presentarle tiene dos partes.
-
-Primero es el "NOT" (`!`). Cuando veas esto significará que estamos preguntando lo contrario de la expresión (volveremos a visitar el operador NOT más adelante en esta lección).
-
-Con eso en mente, podemos introducir el "no es igual" (`!==`). Esto devolverá verdadero si los artículos NO son iguales entre sí de alguna manera. Esto, como el triple igual, tiene en cuenta el tipo de dato.
-
-```javascript
-1 !== 1;          // false
-1 !== '1';        // true
-'perro' !== 'perro';  // false
-'perro' !== 'Perro';  // true
-```
-
-## Flujos de control (continuación)
-
-En la última lección aprendimos sobre el operador `if`. Podemos usar `if` para verificar y ver si una expresión es `true`, si es así, ejecute algún código, o si no es así, que omita el código y siga ejecutando el programa.
-
-```javascript
-if (1 + 1 === 2) {
-    console.log('La expresión es verdadera');
+function logHola() {
+    console.log('hola!');
 }
-```
 
-Para complementar a `if`, también podemos usar las declaraciones `else if` y `else`. Estas declaraciones deben usarse con `if` y deben venir después de él. Estas declaraciones serán evaluadas si el inicial `if` devuelve `false`. Podemos pensar en el `else if` como otra declaración `if` que se ha encadenado (podemos tener tantas otras declaraciones `if` que queramos). Solo se ejecutará un bloque de código de instrucción `if` o `else if`. Si en algún momento una declaración devuelve `true`, ese código se ejecutará y el resto se omitirá:
+logHola();
+```
+En este ejemplo declaramos una función `logHola` y la configuramos en `console.log('hola')`. Entonces podemos ver que para ejecutar esta función, necesitamos escribir el nombre y los paréntesis. Esta es la sintaxis para ejecutar una función. Una función siempre necesita paréntesis para ejecutarse.
+
+### Argumentos
+
+Ahora que podemos ejecutar una función básica, vamos a comenzar a pasarle argumentos.
 
 ```javascript
-if (false) {
-    console.log('Este código será omitido');
-} else if (true) {
-    console.log('Este código correrá');
-} else if (true) {
-    console.log('Este código NO correrá');
+function logHola(nombre) {
+    console.log('Hola, ' + nombre);
 }
-```
 
-La declaración `else` siempre aparecerá al final de una cadena `if-else` o `if`, y actuará de manera predeterminada. Si ninguna de las expresiones devuelve `true`, el bloque de código `else` se ejecutará sin importar qué. Si alguna de las expresiones anteriores `if` o `else if` son `true`, el bloque de código de instrucción `else` no se ejecutará.
+logHola('Martin');
+```
+Si agregamos una variable a los paréntesis cuando declaramos la función, podemos usar esta variable dentro de nuestra función. Iniciamos el valor de esta variable pasándola a la función cuando la llamamos. En este ejemplo, `nombre = 'Martin'` al momento de llamar la función con el argumento ``Martin``. También podemos pasar otras variables de esta manera:
 
 ```javascript
-if (false) {
-    console.log('Este código será omitido');
-} else if (false) {
-    console.log('Este código NO correrá');
+function logHola(nombre) {
+    console.log( `Hola, ${nombre}`);
+}
+
+var miNombre = 'Antonio';
+logHola(miNombre);
+```
+Podemos agregar múltiples argumentos colocando una coma entre ellos:
+
+```javascript
+function sumarDosNumeros(a, b) {
+  var suma = a + b;
+  return suma;
+}
+
+sumarDosNumeros(2, 6); // 8
+```
+### Declaración "return"
+
+En el ejemplo anterior presentamos la declaración `return`. No vamos a usar `console.log` con todo lo que salga de una función. Lo más probable es que queramos devolver algo. En este caso es la suma de los dos números. Piense en la declaración de retorno ("return") como la única forma en que los datos escapan de una función. No se puede acceder a nada más que a lo que se devuelve fuera de la función. También tenga en cuenta que cuando una función golpea una declaración de retorno, la función detiene inmediatamente lo que está haciendo y "devuelve" lo especificado.
+
+Si intentamos hacer `console.log` a algo que declaramos dentro de la función, devolverá `undefined` porque no tenemos acceso a este fuera de la función.
+
+La única forma de acceder a algo dentro de la función es devolverlo.
+
+También podemos establecer variables para igualar a lo que devuelve una función.
+
+```javascript
+function restarDosNumeros(a, b) {
+  var diferencia = a - b;
+  return diferencia;
+}
+
+var diferenciaDeResta = restarDosNumeros(10, 9);
+console.log(diferenciaDeResta); // 1
+console.log(diferencia); // undefined
+```
+Podemos ver que la variable `diferencia` se establece dentro de la función y solo pertenece allí.
+
+---
+## Controladores de flujo (`if` / `else`)
+
+Se refiere al orden en que es ejecutado nuestro código en JavaScript. Nuestro código normalmente se ejecuta de arriba a abajo, desde nuestra primera línea hasta la última, sin embargo, esto puede cambiar a medida los controladores de flujo son implementados en nuestro script. Estos pueden hacer que parte de nuestro código no sea leído o sea leído de una forma diferente, etc.
+
+Dentro de estos casos, encontramos los ``condicionales``, los cuales y como lo dice su nombre, ejecutarán código en particular a partir de que ciertas condiciones específicas se satisfagan o no.
+### Condicionales if ... else
+
+Así como en nuestra vida real tomamos decisiones a partir de diferentes situaciones que se presentan: *si hace frio entonces nos abrigamos*, *si llueve afuera entonces salimos a la calle con paraguas*, etc. nos interesamos también en que cierta parte de nuestro código se ejecute **SOLAMENTE** si ciertas condiciones se cumplen o no, usando las palabras claves `if` y `else`.
+
+### Estructura de un condicional
+
+Usamos `if` seguido de paréntesis dentro de los cuales escribimos la condición a analizar. Seguido de esto, escribimos entre llaves el código que va a ejecutarse si la condición dentro del paréntesis es verdadera, de lo contrario, usamos `else` seguido de llaves (este no lleva condición dado que se asume como verdadera siempre que la condición del if es falsa) dentro de las cuales estará el código que se ejecutará.
+
+```javascript
+if(condición) {
+	//si la condición es verdadera, el código escrito aquí se ejecutará
 } else {
-    console.log('Este código correrá');
+	//si la condición es falsa, el código escrito aquí se ejecutará
 }
 ```
+¿Qué sucede si tengo más de una condición para verificar?
 
-## Operadores lógicos
-
-También podemos combinar dos expresiones de igualdad y preguntar si alguna de las dos es verdadera, si ambas son verdaderas o si ninguna de ellas es verdadera. Para hacer esto, utilizaremos operadores lógicos.
-
-### &&
-
-El primer operador lógico que veremos es el operador "Y" ("AND"). Está escrito con dos símbolos (`&&`). Esto evaluará ambas expresiones y devolverá verdadero si AMBAS expresiones son `true`. Si uno (o ambos) de ellos es falso, este operador devolverá `false`:
+Cuando se tenga más de una condición, usamos la palabra clave `else if` seguida de la condición entre paréntesis y el bloque de código que se ejecutaría si dicha condición es satisfecha. Podemos pensar en el `else if` como otra declaración `if` que se ha encadenado (podemos tener tantas otras declaraciones if como queramos). Solo se ejecutará un bloque de código de instrucción `if` o `else if`. Si en algún momento una declaración devuelve true, ese código se ejecutará y el resto se omitirá. Si no se ejecutará el código dentro del `else`:
 
 ```javascript
-if (100 > 10 && 10 === 10) {
-    console.log('Ambas declaraciones son ciertas, este código se ejecutará');
+if(condición1) {
+	//si la condición1 es verdadera, el código escrito aquí se ejecutará
+} else if(condición2){
+	//si la condición2 es falsa, el código escrito aquí se ejecutará
 }
-
-if (10 === 9 && 10 > 9) {
-    console.log('Una de las declaraciones es false, por lo que && devolverá false, y este código no se ejecutará');
+.
+.
+.
+else {
+  //si ninguna de las condiciones anteriores se cumplió, entonces se ejecuta el código escrito aquí
 }
 ```
-
-### ||
-
-El siguiente es el operador "Ó" ("OR"). Está escrito con dos barras verticales (`||`). Determinará si una de las expresiones es `true`. Devolverá `true` si una (o ambas) de las expresiones es `true`. Devolverá `false` si AMBAS expresiones son `false`:
+Para ver ejemplos de esto, utilicemos funciones y los operadores de comparación:
 
 ```javascript
-if (100 > 10 || 10 === 10) {
-    console.log('Ambas declaraciones son ciertas, este código se ejecutará');
+function puedeManejar(edad) {
+    if (edad > 18) {
+      return true;
+    } else {
+        return false;
+    }
 }
-
-if (10 === 9 || 10 > 9) {
-    console.log('Una de las declaraciones es true, por lo que || devolverá true y este código se ejecutará');
-}
-
-if (10 === 9 || 1 > 9) {
-    console.log('Ambas declaraciones son falsas, por lo que || devolverá false y este código no se ejecutará');
-}
+puedeManejar(22); // true
 ```
-
-### !
-
-El último operador lógico es el operador "NOT" ("NO"). Está escrito como un solo signo de exclamación (`!`). Vimos este operador antes al determinar la igualdad (`!==`). Como antes, el operador NOT devolverá el valor booleano opuesto de lo que se le pasa:
 
 ```javascript
-if (!false) {
-    console.log('El ! devolverá true, porque es lo contrario de false, así que ste código se ejecutará');
-}
-
-if (!(1 === 1)) {
-    console.log('1 es igual a 1, de modo que la expresión devuelve true. El operador ! devolverá lo contrario de eso, por lo que este código NO se ejecutará');
-}
-```
-
-### Notas sobre operadores lógicos
-
-Un par de cosas a tener en cuenta sobre los operadores lógicos.
-
-* Las expresiones se evalúan en orden, y la computadora omitirá cualquier expresión redundante. En una declaración `&&`, si la primera expresión es `false`, la segunda expresión no se evaluará porque AMBAS expresiones deben ser `true`. Lo mismo para la declaración `||`. Si la primera expresión es `verdadero`, la segunda no se evaluará porque solo debe haber una declaración `verdadero` para cumplir con los requisitos del operador.
-
-* Usá paréntesis. Como vimos en el segundo ejemplo de operador `!`, usamos paréntesis para evaluar PRIMERO lo que estaba dentro de los paréntesis, luego aplicamos el operador `!`. Podemos ajustar cualquier expresión entre paréntesis y se evaluará antes de evaluar la expresión como un todo.
-
-## Bucles ***for***
-
-La mayoría del software se ejecuta en bucles, evaluando expresiones una y otra vez hasta que devuelve lo que estamos buscando o se detiene después de cierto tiempo. Javascript tiene dos expresiones de bucle incorporadas y hoy veremos la primera, el bucle "for".
-
-Los bucles `for` tienen una sintaxis única, similar a la instrucción `if`, pero un poco más compleja. Primero tenemos la palabra clave `for`, seguida de paréntesis y luego abrir y cerrar llaves. Dentro de los paréntesis necesitaremos tres cosas. Primero, debemos declarar una variable, esto es sobre lo que se repetirá el bucle. Entonces tendremos una expresión condicional, el ciclo continuará sucediendo hasta que esta declaración sea `false`. Tercero, incrementaremos nuestra variable. Las tres declaraciones están separadas por un punto y coma.
-
-```javascript
-for (let i = 0                 ; i < 10                 ; i++          ) {
-// | Declaramos una variable | Expresión condcicional | Incrementamos la variable |
-    console.log(i);
-}
-```
-
-En este ejemplo, vemos que inicialmente establecemos nuestra variable `i` en 0, el ciclo se ejecutará y cada vez que llegue al final, aumentará el contador en uno. El bucle `for` evaluará la expresión condicional. Si es `true`, se ejecutará nuevamente, si es `false` dejará de funcionar.
-
-### El operador ++
-
-Vimos en el último ejemplo el operador `++`. Esta es la abreviatura de Javascript para "Establecer el valor de la variable a su valor actual más uno". Hay algunas más de estas expresiones abreviadas de matemática / asignación variable, las visitaremos en las próximas lecciones.
-
-### Bucles infinitos
-
-Es posible que un bucle se atasque en lo que llamamos un "bucle infinito". Debes asegurarte de que haya una forma de finalizar el bucle. Ejemplo de un bucle infinito:
-
-```javascript
-for (let i = 0; i >= 0; i++) {
-    console.log(i);
-}
-```
-
-Debido a que nuestra expresión condicional SIEMPRE será `true` (`i` nunca será menor que 0), este ciclo se ejecutará esencialmente para siempre. Esto interrumpirá su programa y puede bloquear su navegador web o computadora.
-
-## Arguments
-
-Como vimos anteriormente, las funciones son objetos invocables, y podemos hacerlo pasándoles argumentos que varíen el comportamiento de estas.
-
-``` javascript
-> function log(str) {
-    console.log(str)
+function dominiosDeInternet(dominio){
+  if(dominio === 'co'){
+    return 'El dominio es de Colombia'
+  } else if(dominio === 'ar'){
+    return 'El dominio es de Argentina'
+  } else if(dominio === 'br'){
+    return 'El dominio es de Brasil'
+  } else {
+    return 'El dominio es desconocido'
   }
-
-> log('hola!')
-< 'hola!'
+}
 ```
+## Homework
 
-Si sabemos las variables a tomar, como en el ejemplo `str`, podemos darle nombre a este parámetro. Sino hay una propiedad **arguments** , propia de todas las funciones, que contiene los parámetros pasados como argumento.
-
-``` javascript
-> function args() {
-    console.log(arguments)
-  }
-
-> args('hola!', 'otro parametro', 3)
-< ["hola!", "otro parametro", 3, callee: 'function', Symbol(Symbol.iterator): 'function']
-```
-
-*arguments* nos da acceso a la **n** cantidad como parámetros, pero tengamos en cuenta que **no es un Arreglo**.
-
-``` javascript
-> function args() {
-    return Array.isArray(arguments)
-  }
-
-> args(1,2,3)
-< false
-```
-
-Si queremos saber cuantos parámetros puede recibir una función podemos usar la propiedad `length`.
-
-``` javascript
-> args.length
-< 0 // porque en la función `args` definimos 0 parámetros
-```
-
-## La mejor herramienta del programador
-
-Día a día nos encontramos con diversos problemas y, como sabemos, cada problema puede tener distintas soluciones. Una buena forma para adquirir las herramientas que nos permitan resolverlos y aprender su correcto uso es leer documentación oficial o "respaldada". Para ello, nuestro mejor amigo es Google!
-
-En el homework de este módulo nos vamos a encontrar con dos temas que no están explicados en este readme: switch y do while.
-Te invitamos a buscar en Google información de estos conceptos para poder desarrollar la homework. A continuación, algunos tips de búsqueda.
-
-* Recomendado buscar en inglés: ¡Aparecen mejores y mayor cantidad de resultados! Ej: "switch statement javascript".
-* Recordemos aclarar el lenguaje en el que estamos buscando el tema, como en el ejemplo de arriba donde aclaramos javascript, ya que un mismo tema puede existir en distintos lenguajes de programación y funcionar de manera distinta en cada uno de ellos.
-* Uno de los primeros resultados que vas a encontrar será MDN (Mozilla Developer Network): es una web muy completa que incluye tanto documentación como ejemplos.
-
-    <summary>Spoiler, resultado de búsqueda en Google!</summary>
-    <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/switch">MDN : Switch</a>
-    <br>
-    <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/do...while">MDN : Do While</a>
+Realiza los ejercicios propuestos en el archivo `homework.js` de esta misma carpeta, el cual tiene test. Si no recuerdas cómo debes correr el test, revisa el archivo `README` que se encuentra al final del repositorio.
 
 ## Recursos adicionales
 
-* [MDN: Comparison Operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comparison_Operators)
 * [MDN: Control Flow](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else)
-* [MDN: Logical Operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_Operators)
-* [MDN: for Loops](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for)
+* [Codecademy: Learn Javascript](https://www.codecademy.com/learn/learn-javascript)
+* [Udacity: Intro to Javascript](https://www.udacity.com/course/intro-to-javascript--ud803)
+* [MDN: Official Javascript Documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-## Homework
-
-Abre la carpeta "homework" y completa la tarea descripta en el archivo [README](https://github.com/soyHenry/Prep-Course/tree/main/03-JS-II/homework)
-
----
-
-#### Si tienes dudas sobre este tema, puedes consultarlas en el canal ***03_js-ii*** de Slack
